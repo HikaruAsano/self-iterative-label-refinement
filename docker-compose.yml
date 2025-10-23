@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  self_iterative_refinement:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USER_ID: ${USER_ID:-1009}
+        GROUP_ID: ${GROUP_ID:-1009}
+    image: self_iterative_refinement
+    shm_size: "16g"         # expands /dev/shm to 16 GiB (avoid NCCL shared‑memory errors)
+    ipc: host               # alternatively, reuse host's full shared‑memory segment
+    volumes:
+      - .:/app
+      - venv:/app/.venv
+      - ./outputs:/outputs
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: all
+      WANDB_API_KEY: ${WANDB_API_KEY}
+      WANDB_ENTITY: ${WANDB_ENTITY}
+      HUGGINGFACE_HUB_TOKEN: ${HUGGINGFACE_HUB_TOKEN}
+      WANDB_CACHE_DIR: ./.cache/wandb
+      WANDB_DATA_DIR: ./.cache/data
+      HF_HOME: ./.cache/huggingface
+      HF_DATASETS_CACHE: ./.cache/huggingface/datasets
+      PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities:
+                - gpu
+    command: tail -f /dev/null
+    container_name: self_iterative_refinement
+    user: "${USER_ID:-1009}:${GROUP_ID:-1009}"
+
+volumes:
+  app:
+    driver: local
+  venv:
+    driver: local
