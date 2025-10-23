@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-    <sup>1</sup>The University of Tokyo &nbsp;****
+    <sup>1</sup>The University of Tokyo &nbsp;
     <sup>2</sup>OMRON SINIC X
 </p>
 
