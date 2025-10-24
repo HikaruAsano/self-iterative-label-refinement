@@ -22,6 +22,6 @@
 
 ## 📖 Overview
 
-This is the official repository of Self Iterative Label Refinement via Robust Unlabeled Learning.
+This is the official repository of Self Iterative Label Refinement via Robust Unlabeled Learning (Neurips 2025).
 
 **The implementation will be released soon.**
